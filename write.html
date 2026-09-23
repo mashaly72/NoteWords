@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Write · NoteWords</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="write-page">
+
+        <!-- TOP BAR -->
+        <header class="write-header">
+
+            <a href="index.html" class="close-button">
+                ×
+            </a>
+
+            <h1>New note</h1>
+
+            <button class="publish-button" id="publishButton">
+                Publish
+            </button>
+
+        </header>
+
+
+        <!-- WRITING AREA -->
+        <main class="writing-area">
+
+            <p class="write-label">
+                WRITE WHAT MATTERS
+            </p>
+
+            <textarea
+                id="noteInput"
+                maxlength="600"
+                placeholder="Write your words here..."
+            ></textarea>
+
+            <p class="writing-hint">
+                Your words can be brief. They can be unfinished.
+                Let them be honest.
+            </p>
+
+        </main>
+
+
+        <!-- BOTTOM TOOLBAR -->
+        <footer class="writing-toolbar">
+
+            <div class="toolbar-left">
+
+                <button>
+                    Aa
+                </button>
+
+                <button>
+                    ☷
+                </button>
+
+            </div>
+
+            <span id="characterCount">
+                0 / 600
+            </span>
+
+        </footer>
+
+    </div>
+
+
+    <script>
+
+    const noteInput = document.getElementById("noteInput");
+    const characterCount = document.getElementById("characterCount");
+    const publishButton = document.getElementById("publishButton");
+
+
+    noteInput.addEventListener("input", function () {
+
+        characterCount.textContent =
+            `${noteInput.value.length} / 600`;
+
+    });
+
+
+    publishButton.addEventListener("click", function () {
+
+        const text = noteInput.value.trim();
+
+        if (text === "") {
+
+            alert("Write something before publishing.");
+
+            return;
+
+        }
+
+        const savedNotes = JSON.parse(
+            localStorage.getItem("noteWordsNotes")
+        ) || [];
+const newNote = {
+
+    id: Date.now(),
+
+    text: text,
+
+    author: "You",
+
+    time: "Just now",
+
+    likes: 0,
+
+    saved: true,
+
+    createdAt: new Date().toISOString()
+
+};
+
+        savedNotes.unshift(newNote);
+
+        localStorage.setItem(
+            "noteWordsNotes",
+            JSON.stringify(savedNotes)
+        );
+
+        window.location.href = "index.html";
+
+    });
+
+</script>
+ 
+
+</body>
+
+</html>
